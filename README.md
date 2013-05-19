@@ -1,4 +1,4 @@
-# LiveFantasy
+# LiveFPL
 
 The [Fantasy Premier League](http:/fantasy.premierleague.com/) site has one (quite strange) limitation - the mini league tables aren't updated live even though the actual team pages are. This makes it a chore to stay updated on how you're doing compared to your mini league buddies. This is a small Ruby library to scrape information from the Premier League website and then present it in whichever way is wanted.
 
