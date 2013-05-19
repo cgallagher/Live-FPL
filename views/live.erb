@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LiveFantasy</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+    <style>
+      body { height: 100%; font-family: Helvetica; margin: 0; padding: 0px; background-color: #eee; padding: 5px; }
+      table { border: 1px solid black; -moz-border-radius: 8px; -webkit-border-radius: 8px; width: 100%;  background-color: white; margin-top: 10px; }
+      table#tips td {font-size: 70%;}
+      th,td { border-bottom:1px solid #E0E0E0; font-size:16px; font-weight:bold; margin:0; padding:8px 0 8px 10px; } 
+      th { border-bottom:1px solid black; }
+      a, a:visited, a:link { text-decoration: none; color: inherit; }
+      div.element { padding: 4px; margin: 0px; width: 500px; float: left; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <a href="/198258">Betapond League</a>
+    </div>
+    <div>
+      <a href="/">Pants Party</a>
+    </div>
+    <div class="element">
+  
+    <table width="100%">
+      <tr class="top">
+        <th align="left">Team</th>
+        <th align="right">Points</th>
+        <th align="right">Total</th>
+        <th align="right">Left to play</th>
+        <th align="left">Captain</th>
+        <th align="left">Transfers In</th>
+      </tr>
+      <% for team in Team.sort{|x,y| (y.total <=> x.total)*10 + (x.name <=> y.name) } %>
+      <tr>
+        <td><a href="<%=team.link%>"><%=team.ownershort%></a></td>
+        <td align="right"><%=team.points%></td>
+        <td align="right"><%=team.total%></td>
+        <td align="right"><%=team.playersleft%></th>
+        <td style="font-size:70%;"><%=team.teamplayers(:captain => true).first.player.name%></td>
+        <td><%=team.transfers%></th>
+      </tr>
+      <% end %>
+    </table>
+    
+    </div>
+    <div class="element">
+
+    
+    <table width="100%">
+      <tr>
+        <th align="right">P</th>
+        <th align="left">Player</th>
+        <th align="left">Teams</th>
+      </tr>
+      <% for player in Player.all(:played => true).sort{ |x,y| (y.points <=> x.points)*100 + (y.teamplayers.length <=> x.teamplayers.length)*10 + (x.name <=> y.name) } %>
+      <tr>
+        <td align="right"><%=player.points%></td>
+        <td><%= player.name %>
+        <td style="font-size:70%;">
+          <% for teamplayer in player.teamplayers(:bench => false).sort{|x,y| x.team.owner <=> y.team.owner } %><span style="<%=teamplayer.captain ? "color: #c00;" : ""%>"><%=teamplayer.team.ownershort%></span> <% end %>
+          <% for teamplayer in player.teamplayers(:bench => true).sort{|x,y| x.team.owner <=> y.team.owner } %><span style="color: #ccc"><%=teamplayer.team.ownershort%></span> <% end %>
+        </td>
+      </tr>
+      <% end %>
+      <% for player in Player.all(:played => false).sort{ |x,y| (y.points <=> x.points)*100 + (y.teamplayers.length <=> x.teamplayers.length)*10 + (x.name <=> y.name) } %>
+      <tr>
+        <td align="right">-</td>
+        <td><%= player.name %>
+        <td style="font-size:70%;">
+          <% for teamplayer in player.teamplayers(:bench => false).sort{|x,y| x.team.owner <=> y.team.owner } %><span style="<%=teamplayer.captain ? "color: #c00;" : ""%>"><%=teamplayer.team.ownershort%></span> <% end %>
+          <% for teamplayer in player.teamplayers(:bench => true).sort{|x,y| x.team.owner <=> y.team.owner } %><span style="color: #ccc"><%=teamplayer.team.ownershort%></span> <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+   
+    </div>    
+  </body>
+</html>
