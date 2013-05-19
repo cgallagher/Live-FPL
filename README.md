@@ -5,5 +5,3 @@ The [Fantasy Premier League](http:/fantasy.premierleague.com/) site has one (qui
 It's released under the MIT license, so feel free to use it for whatever you'd like.
 
 I've included the Sinatra app I created along with the library to show updated points for a list of teams. It's not particularly advanced, but does the trick for me (and works pretty well on the iPhone).
-
-Copyright (c) 2010 evenv, released under the MIT license.
